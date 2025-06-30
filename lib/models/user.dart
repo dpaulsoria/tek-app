@@ -1,31 +1,48 @@
 class User {
+  final int id;
   final String username;
-  final String name;
-  final String password;
+  final String? firstName;
+  final String? lastName;
   final String email;
   final String token;
+
+  /// Campos opcionales de cliente
+  final String? document;
+  final String? phone;
+  final String? address;
+
   User({
+    required this.id,
     required this.username,
-    required this.name,
-    required this.password,
+    this.firstName,
+    this.lastName,
     required this.email,
-    required this.token
+    required this.token,
+    this.document,
+    this.phone,
+    this.address,
   });
-  /// Crea un User a partir de un JSON
+
+  /// Para el login (viene token)
   factory User.fromJson(Map<String, dynamic> json) => User(
-    username: json['username'] as String,
-    name:     json['name']     as String,
-    password: json['password'] as String,
-    email:    json['email']    as String,
-    token:    json['token']    as String,
+    id:        json['user']['id']    as int,
+    username:  json['user']['name'],     // o cambia según tu JSON
+    firstName: null,
+    lastName:  null,
+    email:     json['user']['email'] as String,
+    token:     json['token']          as String,
   );
 
-  /// Convierte este User a JSON
-  Map<String, dynamic> toJson() => {
-    'username': username,
-    'name':     name,
-    'password': password,
-    'email':    email,
-    'token':    token,
-  };
+  /// Para mapear clientes
+  factory User.fromClientJson(Map<String, dynamic> json) => User(
+    id:        json['id']          as int,
+    username:  '',                    // no aplica aquí
+    firstName: json['first_name']    as String,
+    lastName:  json['last_name']     as String,
+    email:     json['email']         as String,
+    token:     '',                    // no aplica aquí
+    document:  json['document']      as String?,
+    phone:     json['phone']         as String?,
+    address:   json['address']       as String?,
+  );
 }

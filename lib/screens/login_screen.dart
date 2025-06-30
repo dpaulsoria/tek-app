@@ -1,7 +1,7 @@
 // lib/screens/login_screen.dart
 
 import 'package:flutter/material.dart';
-import '../services/auth_service.dart';
+import '../services/api_service.dart';
 import 'home_screen.dart';
 import '../models/user.dart';
 
@@ -15,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailCtrl = TextEditingController();
   final _passCtrl  = TextEditingController();
-  final _authService = AuthService();
+  final _apiService = ApiService();
   bool _loading = false;
 
   Future<void> _onLogin() async {
@@ -29,8 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     setState(() => _loading = true);
     try {
-      // usa la URL base que pusiste en tu .env
-      final User user = await _authService.login(email, pass);
+      final User user = await _apiService.login(email, pass);
 
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
