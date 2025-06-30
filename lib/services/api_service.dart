@@ -92,7 +92,7 @@ class ApiService {
     );
     debugPrint('→ createAppointment() = ${resp.body}');
 
-    if (resp.statusCode != 201) {
+    if (resp.statusCode != 200) {
       throw Exception('Error ${resp.statusCode}: ${resp.body}');
     }
 
